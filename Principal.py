@@ -1,9 +1,8 @@
+from br.com.experian.service.FolderWriter import FolderWriter
 from br.com.experian.util.Cache import Cache
 from br.com.experian.service.FileWriter import Writer
-from br.com.experian.service.FolderWriter import FolderWriter
 from br.com.experian.util.Configuration import Configuration
 import logging
-
 
 
 def inputUserParameters():
@@ -14,7 +13,7 @@ def inputUserParameters():
 
     if ( outputFolder == '' ):
         logging.info('Utilizando o diretorio c:\\Temp para a migracao do projeto')
-        outputFolder = 'C:\Temp'
+        outputFolder = 'C:\\Temp\\Copiados'
 
     Cache.addParameter('@version@', version )
     Cache.addParameter('@outputFolder@', outputFolder )
@@ -31,9 +30,25 @@ def executarAplicativo():
     Configuration.initialize()
 
     inputUserParameters()
+
+    logging.info("Copiando o parent pom")
     Writer.writeParentPom( Cache.getParameter('@outputFolder@') )
-    FolderWriter.copyFolder('E:\\Pasta Pessoal\\Documentos\\Apto\\Contas\\2019\\Condominio','C:\\Temp\\Copiados')
+
+    logging.info("iniciando copia do ear")
+    FolderWriter.createEarModule(Cache.getParameter('@outputFolder@'))
+
+    logging.info("iniciando copia do web")
+    FolderWriter.createWebModule('',Cache.getParameter('@outputFolder@'))
+
+
 
     logging.info("Execucao concluida com sucesso!")
 
+
 executarAplicativo()
+
+# Configuration.initialize()
+#
+# logging.info('parentPomPath: ' + str( parentPomPath ) )
+# logging.info('parentPomPath: ' + str( parentPomPath ) )
+# print( 'pathOfThisFile ' + str( pathOfThisFile )  )

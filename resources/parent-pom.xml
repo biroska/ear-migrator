@@ -5,7 +5,7 @@
 
 	<modelVersion>4.0.0</modelVersion>
 
-	<groupId>br.com.experian</groupId>
+	<groupId>com.serasaexperian.sistemascd<</groupId>
 	<artifactId>@artifactory-id@</artifactId>
 	<packaging>pom</packaging>
 	<version>@version@</version>
