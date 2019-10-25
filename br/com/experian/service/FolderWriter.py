@@ -1,3 +1,4 @@
+import os
 import logging
 from pathlib import Path
 from br.com.experian.util.Cache import Cache
@@ -34,6 +35,16 @@ class FolderWriter:
             logging.info("Copiando diretorio web")
 
             finalWebFolder = orig + '\\' + Cache.getParameter('@artifactory-id@') + '-web'
+
+
+            arquivosNaoCopiar = set( [ '*.class', 'target*', '.git', '.settings', '.classpath', '.project',
+                                       '.gitignore', '.jenkins.yml', 'README.md' ] )
+            contents = set( os.listdir( orig ) )
+            resul = contents.difference( arquivosNaoCopiar )
+
+            for f in resul:
+                logging.info("Conteudo: " + f )
+
             logging.info('localizacao do diretorio web: ' + finalWebFolder )
 
             FolderWriter.copyFolder( orig, finalWebFolder )
