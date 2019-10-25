@@ -1,7 +1,7 @@
 import logging
 from pathlib import Path
 from br.com.experian.util.Cache import Cache
-from shutil import copytree, ignore_patterns
+from shutil import copytree, ignore_patterns, move
 
 
 class FolderWriter:
@@ -9,7 +9,8 @@ class FolderWriter:
     def copyFolder( source, dest ):
         try:
             logging.info("Copiando os diretorios de: " + source + " para: " + dest)
-            copytree( source, dest, ignore=ignore_patterns('*.class', 'target*') )
+            copytree( source, dest, ignore=ignore_patterns('*.class', 'target*', '.git', '.settings', '.classpath', '.project',
+                                                           '.gitignore', '.jenkins.yml', 'README.md' ) )
         except Exception as e:
             logging.error("Ocorreu um erro ao copiar os diretorios de: " + source + " para: " + dest )
             logging.error("Erro: " + str(e))
@@ -28,16 +29,15 @@ class FolderWriter:
             logging.error("Ocorreu um erro ao copiar os diretorios de: resources/ear para: " + dest )
             logging.error("Erro: " + str(e))
 
-    def createWebModule( orig, dest):
+    def createWebModule( orig ):
         try:
             logging.info("Copiando diretorio web")
 
-            pathOfThisFile = Path(__file__).parent
-            pathOfEarFolder = (pathOfThisFile / "../../../../resources/ear").resolve()
-            logging.info('localizacao do diretorio web: ' + orig )
+            finalWebFolder = orig + '\\' + Cache.getParameter('@artifactory-id@') + '-web'
+            logging.info('localizacao do diretorio web: ' + finalWebFolder )
 
-            FolderWriter.copyFolder(str(pathOfEarFolder), dest + '\\' + Cache.getParameter('@artifactory-id@') + '-web')
+            FolderWriter.copyFolder( orig, finalWebFolder )
 
         except Exception as e:
-            logging.error("Ocorreu um erro ao copiar os diretorios de: " + orig + " para: " + dest)
+            logging.error("Ocorreu um erro ao copiar os diretorios de: " + orig + " para: " + finalWebFolder)
             logging.error("Erro: " + str(e))

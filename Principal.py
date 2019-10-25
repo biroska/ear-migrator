@@ -31,16 +31,14 @@ def executarAplicativo():
 
     inputUserParameters()
 
-    logging.info("Copiando o parent pom")
-    Writer.writeParentPom( Cache.getParameter('@outputFolder@') )
+    logging.info("iniciando copia do web")
+    FolderWriter.createWebModule(Cache.getParameter('@outputFolder@'))
 
-    logging.info("iniciando copia do ear")
+    logging.info("Copiando o parent pom")
     FolderWriter.createEarModule(Cache.getParameter('@outputFolder@'))
 
-    logging.info("iniciando copia do web")
-    FolderWriter.createWebModule('',Cache.getParameter('@outputFolder@'))
-
-
+    Writer.writeParentPom( Cache.getParameter('@outputFolder@') )
+    logging.info("iniciando copia do ear")
 
     logging.info("Execucao concluida com sucesso!")
 
