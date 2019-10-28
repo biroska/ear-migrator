@@ -7,7 +7,7 @@
     <parent>
         <groupId>com.serasaexperian.sistemascd</groupId>
 		<artifactId>@artifactory-id@</artifactId>
-		<version>@version@</version>
+		<version>${custom.project.version}</version>
     </parent>
 	
 	<groupId>com.serasaexperian.sistemascd</groupId>

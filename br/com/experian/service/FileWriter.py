@@ -1,5 +1,7 @@
 from br.com.experian.util.Cache import Cache
+from xml.etree.ElementTree import ElementTree
 from pathlib import Path
+import xml.etree.ElementTree as ET
 import logging
 
 
@@ -22,6 +24,47 @@ class Writer:
         fin = open( outputPom, "wt")
         fin.write( data )
         fin.close()
+
+    def correctEarPom( outputFolder ):
+
+        earPomLocation = outputFolder + '\\' + Cache.getParameter('@artifactory-id@') + '-ear\\pom.xml'
+        logging.debug("Localizacao do earPomLocation: " + str(earPomLocation) )
+
+        fin = open( earPomLocation, "rt")
+        data = fin.read()
+        data = Writer.__replaceParameters( data )
+        fin.close()
+
+        fin = open( earPomLocation, "wt")
+        fin.write( data )
+        fin.close()
+
+    def correctWebPom( outputFolder ):
+
+        ns = {'maven': 'http://maven.apache.org/POM/4.0.0',
+              'xsi': 'http://www.w3.org/2001/XMLSchema-instance'}
+
+        ET.register_namespace('', "http://maven.apache.org/POM/4.0.0")
+        ET.register_namespace('xsi', "http://www.w3.org/2001/XMLSchema-instance")
+
+        webPom = outputFolder + '\\' + Cache.getParameter('@artifactory-id@') + '-web\\pom.xml'
+        logging.info("Localizacao do webPomLocation: " + str( webPom ))
+
+        tree = ElementTree()
+
+        tree.parse( webPom )
+        root = tree.getroot()
+
+        root.find('maven:version', ns ).text = Cache.getParameter('@version@')
+
+        root.find('maven:parent', ns ).find('maven:artifactId', ns).text = Cache.getParameter('@artifactory-id@')
+        root.find('maven:parent', ns ).find('maven:version', ns).text = '${custom.project.version}'
+
+        scm = root.find('maven:scm', ns )
+        root.remove( scm )
+
+        tree.write( webPom )
+
 
     def writeParentPom_OLD( outputFolder ):
 

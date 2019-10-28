@@ -3,17 +3,67 @@
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
 
-	<modelVersion>4.0.0</modelVersion>
+    <modelVersion>4.0.0</modelVersion>
 
-	<groupId>com.serasaexperian.sistemascd<</groupId>
-	<artifactId>@artifactory-id@</artifactId>
-	<packaging>pom</packaging>
-	<version>@version@</version>
-	<name>@application-name@</name>
+    <groupId>com.serasaexperian.sistemascd</groupId>
+    <artifactId>@artifactory-id@</artifactId>
+    <packaging>pom</packaging>
+    <version>${custom.project.version}</version>
+    <name>@application-name@</name>
 
-  <modules>
-    <module>@artifactory-id@-ear</module>
-    <module>@artifactory-id@-web</module>
-  </modules>
+    <properties>
+        <custom.project.version>@version@</custom.project.version>
+        <maven.compiler.source>1.8</maven.compiler.source>
+        <maven.compiler.target>1.8</maven.compiler.target>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+    </properties>
+
+    <modules>
+        <module>@artifactory-id@-web</module>
+        <module>@artifactory-id@-ear</module>
+    </modules>
+
+    <dependencies>
+        <dependency>
+            <groupId>javax.servlet</groupId>
+            <artifactId>servlet-api</artifactId>
+            <version>2.5</version>
+            <scope>provided</scope>
+        </dependency>
+        <dependency>
+            <groupId>javax.servlet</groupId>
+            <artifactId>jstl</artifactId>
+            <version>1.2</version>
+            <scope>compile</scope>
+        </dependency>
+        <dependency>
+            <groupId>javax.el</groupId>
+            <artifactId>el-api</artifactId>
+            <version>2.2.1-b04</version>
+        </dependency>
+        <dependency>
+            <groupId>javax.servlet</groupId>
+            <artifactId>jsp-api</artifactId>
+            <version>2.0</version>
+            <scope>provided</scope>
+        </dependency>
+    </dependencies>
+
+    <distributionManagement>
+        <repository>
+            <id>releases</id>
+            <name>Releases Repository</name>
+            <url>
+                http://spobrccm02-pi:8081/nexus/content/repositories/releases
+            </url>
+        </repository>
+        <snapshotRepository>
+            <id>snapshots</id>
+            <name>Snapshot Repository</name>
+            <url>
+                http://spobrccm02-pi:8081/nexus/content/repositories/snapshots
+            </url>
+        </snapshotRepository>
+    </distributionManagement>
 
 </project>
