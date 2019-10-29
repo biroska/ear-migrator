@@ -55,6 +55,7 @@ class Writer:
         tree.parse( webPom )
         root = tree.getroot()
 
+        root.find('maven:artifactId', ns ).text = Cache.getParameter('@artifactory-id@') + '-web'
         root.find('maven:version', ns ).text = Cache.getParameter('@version@')
 
         root.find('maven:parent', ns ).find('maven:artifactId', ns).text = Cache.getParameter('@artifactory-id@')
