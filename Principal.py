@@ -2,6 +2,7 @@ from br.com.experian.service.FolderWriter import FolderWriter
 from br.com.experian.util.Cache import Cache
 from br.com.experian.service.FileWriter import Writer
 from br.com.experian.util.Configuration import Configuration
+from shutil import copytree, ignore_patterns, move, rmtree
 import logging
 
 
@@ -43,7 +44,6 @@ def executarAplicativo():
     Writer.writeParentPom( Cache.getParameter('@outputFolder@') )
 
     logging.info("Execucao concluida com sucesso!")
-
 
 executarAplicativo()
 

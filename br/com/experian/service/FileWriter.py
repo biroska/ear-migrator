@@ -8,6 +8,7 @@ import logging
 class Writer:
 
     def writeParentPom(outputFolder):
+        """Escreve o parent pom do diretorios resources, substituindo os valores informados pelo usuario"""
         pathOfThisFile = Path(__file__).parent
 
         parentPomPath = (pathOfThisFile / "../../../../resources/parent-pom.xml").resolve()
@@ -26,7 +27,7 @@ class Writer:
         fin.close()
 
     def correctEarPom( outputFolder ):
-
+        """Edita o pom do modulo ear substituindo os valores informados pelo usuario"""
         earPomLocation = outputFolder + '\\' + Cache.getParameter('@artifactory-id@') + '-ear\\pom.xml'
         logging.debug("Localizacao do earPomLocation: " + str(earPomLocation) )
 
@@ -40,7 +41,7 @@ class Writer:
         fin.close()
 
     def correctWebPom( outputFolder ):
-
+        """Edita o pom do modulo web substituindo os valores informados pelo usuario e editando as tags para os valores corretos"""
         ns = {'maven': 'http://maven.apache.org/POM/4.0.0',
               'xsi': 'http://www.w3.org/2001/XMLSchema-instance'}
 

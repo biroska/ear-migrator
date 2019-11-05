@@ -2,6 +2,7 @@ import logging
 
 
 class Cache:
+    """Classe utilitaria para armazenar os valores informados pelo usuario a fim de serem reaproveitados pelo programa"""
 
     parameters = {}
 

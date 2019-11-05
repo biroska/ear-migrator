@@ -8,6 +8,7 @@ from shutil import copytree, ignore_patterns, move
 class FolderWriter:
 
     def copyFolder( source, dest ):
+        """Funcao utilitaria para copiar diretorios e arquivos"""
         try:
             logging.info("Copiando os diretorios de: " + source + " para: " + dest)
             copytree( source, dest, ignore=ignore_patterns('*.class', 'target*', '.git', '.settings', '.classpath', '.project',
@@ -17,6 +18,7 @@ class FolderWriter:
             logging.error("Erro: " + str(e))
 
     def createEarModule(dest):
+        """Copia o modulo ear do resources para a estrutura do projeto"""
         try:
             logging.info("Copiando diretorio ear")
 
@@ -31,23 +33,24 @@ class FolderWriter:
             logging.error("Erro: " + str(e))
 
     def createWebModule( orig ):
+        """Cria o modulo web, criando o diretorio artifactoryId-web e copiando os arquivos modulo principal"""
         try:
             logging.info("Copiando diretorio web")
 
             finalWebFolder = orig + '\\' + Cache.getParameter('@artifactory-id@') + '-web'
-
 
             arquivosNaoCopiar = set( [ '*.class', 'target*', '.git', '.settings', '.classpath', '.project',
                                        '.gitignore', '.jenkins.yml', 'README.md' ] )
             contents = set( os.listdir( orig ) )
             resul = contents.difference( arquivosNaoCopiar )
 
-            for f in resul:
-                logging.info("Conteudo: " + f )
-
             logging.info('localizacao do diretorio web: ' + finalWebFolder )
 
-            FolderWriter.copyFolder( orig, finalWebFolder )
+            for f in resul:
+                logging.info("Conteudo: " + orig + '\\' + f )
+                move( orig + '\\' + f,
+                      finalWebFolder,
+                      copy_function=copytree)
 
         except Exception as e:
             logging.error("Ocorreu um erro ao copiar os diretorios de: " + orig + " para: " + finalWebFolder)
