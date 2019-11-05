@@ -35,7 +35,7 @@
 						<webModule>
 							<groupId>com.serasaexperian.sistemascd</groupId>
 							<artifactId>@artifactory-id@-web</artifactId>
-							<contextRoot>/@artifactory-id@</contextRoot>
+							<contextRoot>/@application-name@</contextRoot> <!-- Deverá ser alterado para o artifactoryId -->
 							<uri>@artifactory-id@-web.war</uri>
 						</webModule>
 					</modules>
