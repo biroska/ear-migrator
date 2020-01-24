@@ -8,11 +8,10 @@
     <groupId>com.serasaexperian.sistemascd</groupId>
     <artifactId>@artifactory-id@</artifactId>
     <packaging>pom</packaging>
-    <version>${custom.project.version}</version>
+    <version>@version@</version>
     <name>@application-name@</name>
 
     <properties>
-        <custom.project.version>@version@</custom.project.version>
         <maven.compiler.source>1.8</maven.compiler.source>
         <maven.compiler.target>1.8</maven.compiler.target>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
